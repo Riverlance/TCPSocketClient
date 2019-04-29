@@ -48,7 +48,7 @@ public class ProtocolSender extends AsyncTask<String, Void, String> { // <Params
             handler.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(MainActivity.mainActivity.getApplicationContext(), String.format("Servidor nao encontrado.\nIP: %s (%d)\nUser: %s", serverIP, port, username), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.mainActivity.getApplicationContext(), String.format("Servidor nao encontrado ou ocupado.\nIP: %s (%d)\nUser: %s", serverIP, port, username), Toast.LENGTH_SHORT).show();
                 }
             });
         } catch (IOException e) {
