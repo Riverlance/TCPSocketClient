@@ -2,6 +2,12 @@ package com.tcpsocketclient;
 
 public class User {
     String username;
-    String ip;
-    long lastActionTime;
+
+    public User(String username) {
+        this.username = username;
+    }
+
+    public String getUsername() {
+        return username;
+    }
 }

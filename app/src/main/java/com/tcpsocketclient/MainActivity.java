@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     public static final short OPCODE_STC_USERSMAPSIGNAL = 3;
 
     public static MainActivity mainActivity;
+    public static UsersListActivity usersListActivity;
     private SharedPreferences sp;
     private SharedPreferences.Editor spe;
 
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public EditText portEditText;
 
     public static Map<String, User> usersMap = new HashMap<>();
+    public static Thread protocolParserThread;
+
     public User loggedUser;
 
     @Override
@@ -54,35 +57,34 @@ public class MainActivity extends AppCompatActivity {
 
         loadDefaultValues();
 
-        Thread thread = new Thread(new ProtocolParser(this));
-        thread.start();
+        if (protocolParserThread == null) {
+            protocolParserThread = new Thread(new ProtocolParser());
+            protocolParserThread.start();
+        }
     }
 
-    public void onLogin(String username, String clientIP, long lastActionTime) {
+    public void onLogin(String username) {
         Context context = getApplicationContext();
 
         if (MainActivity.usersMap.containsKey(username)) {
             MainActivity.mainActivity.loggedUser = MainActivity.usersMap.get(username);
         } else {
-            MainActivity.mainActivity.loggedUser = new User();
-            MainActivity.mainActivity.loggedUser.username = username;
-            MainActivity.mainActivity.loggedUser.ip = clientIP;
-            MainActivity.mainActivity.loggedUser.lastActionTime = lastActionTime;
+            MainActivity.mainActivity.loggedUser = new User(username);
             MainActivity.usersMap.put(username, MainActivity.mainActivity.loggedUser);
         }
 
         // Open chat list activity
-        startActivity(new Intent(context, ChatListActivity.class));
+        startActivity(new Intent(context, UsersListActivity.class));
 
         // Message
-        Toast.makeText(context, "Sua sessao iniciou.", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Sua sessao iniciou.", Toast.LENGTH_SHORT).show();
     }
 
     public void onLogout() {
         Context context = getApplicationContext();
 
         // Message
-        Toast.makeText(context, "Sua sessao encerrou.", Toast.LENGTH_LONG).show();
+        Toast.makeText(context, "Sua sessao encerrou.", Toast.LENGTH_SHORT).show();
     }
 
     public void onClickConnectButton(View view) {
