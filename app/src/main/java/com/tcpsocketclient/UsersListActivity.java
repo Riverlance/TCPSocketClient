@@ -87,8 +87,10 @@ public class UsersListActivity extends AppCompatActivity {
         super.onStop();
 
         // Thread should be interrupted since the parent does not exists
-        ticksThread.interrupt();
-        ticksThread = null;
+        if (ticksThread != null) {
+            ticksThread.interrupt();
+            ticksThread = null;
+        }
 
         MainActivity.usersListActivity = null;
     }
