@@ -16,7 +16,7 @@ import com.tcpsocketclient.tcpsocketclient.R;
 
 public class UsersListActivity extends AppCompatActivity {
     // Constants
-    public static final String DEFAULT_TOPBARTITLE = "Usuários online";
+    public static final String DEFAULT_TOPBARTITLE = "Usuários";
 
     // Needed stuffs
     public RecyclerView recyclerView;
