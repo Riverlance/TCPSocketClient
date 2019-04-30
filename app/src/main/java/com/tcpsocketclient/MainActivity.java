@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     public void localLogin(String username) {
         // Make sure username data is saved
         spe.putString("username", username);
@@ -101,20 +100,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         Context context = getApplicationContext();
-
-        /*
-        // Add self to chat list (on top)
-        addChatUser(user, false); // With online status
-        // Add missing users to chat list
-        for (Map.Entry<String, User> entry : usersMap.entrySet()) {
-            // Add user if is not in chat list
-            if (findChatUser(entry.getKey()) == -1) {
-                addChatUser(entry.getValue(), false);
-            }
-        }
-        // Notify changes on chats list
-        notifyChatUsersDataChanged();
-        */
 
         // Open chat list activity
         if (usersListActivity == null) {
@@ -184,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
         }
         return -1;
     }
+
     public void addChatUser(User user, boolean notify) {
         if (findChatUser(user.username) > -1) {
             return;
@@ -193,6 +179,7 @@ public class MainActivity extends AppCompatActivity {
             usersListActivity.usersListAdapter.notifyDataSetChanged();
         }
     }
+
     public void addChatUser(User user) {
         addChatUser(user, true);
     }
@@ -203,9 +190,11 @@ public class MainActivity extends AppCompatActivity {
             usersListActivity.usersListAdapter.notifyDataSetChanged();
         }
     }
+
     public void removeChatUser(int i) {
         removeChatUser(i, true);
     }
+
     public void removeChatUser(String username, boolean notify) {
         int i = findChatUser(username);
         if (i == -1) {
@@ -213,12 +202,15 @@ public class MainActivity extends AppCompatActivity {
         }
         removeChatUser(i, notify);
     }
+
     public void removeChatUser(String username) {
         removeChatUser(username, true);
     }
+
     public void removeChatUser(User user, boolean notify) {
         removeChatUser(user.username, notify);
     }
+
     public void removeChatUser(User user) {
         removeChatUser(user, true);
     }

@@ -1,10 +1,8 @@
 package com.tcpsocketclient;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
-import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.IOException;
@@ -55,16 +53,6 @@ public class ProtocolParser implements Runnable {
                     });
 
                 } else if (opcode == MainActivity.OPCODE_STC_SELFDISCONNECT) {
-                    // Force back to main activity
-                    /* *** This solution is not working properly because it recreates the main activity, instead back to the existing one. ***
-                    Intent intent = new Intent(MainActivity.mainActivity.getApplicationContext(), MainActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    MainActivity.mainActivity.startActivity(intent);
-                    */
-                    //if (MainActivity.usersListActivity != null) {
-                    //    MainActivity.usersListActivity.finish();
-                    //}
-
                     // Execute in UI
                     handler.post(new Runnable() {
                         @Override

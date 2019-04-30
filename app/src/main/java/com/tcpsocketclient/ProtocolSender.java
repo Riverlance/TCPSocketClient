@@ -19,6 +19,7 @@ public class ProtocolSender extends AsyncTask<String, Void, String> { // <Params
     Handler handler;
 
     public ProtocolSender() {
+        // Needed stuffs
         sp = MainActivity.mainActivity.getSharedPreferences(MainActivity.APP_NAME, Context.MODE_PRIVATE);
         handler = new Handler();
     }

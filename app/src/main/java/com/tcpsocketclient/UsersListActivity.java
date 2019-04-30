@@ -1,6 +1,5 @@
 package com.tcpsocketclient;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,10 +12,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.tcpsocketclient.tcpsocketclient.R;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
 
 public class UsersListActivity extends AppCompatActivity {
     // Constants
@@ -122,7 +117,6 @@ public class UsersListActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
 
 
     public void updateRow(int position, boolean isOnline) {
