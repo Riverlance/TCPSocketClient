@@ -42,7 +42,7 @@
         android:digits="0123456789."
         android:ems="10"
         android:hint="IP do Servidor"
-        android:inputType="number"
+        android:inputType="textPersonName"
         android:maxLength="15"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/usernameEditText"

@@ -12,7 +12,7 @@ import com.tcpsocketclient.tcpsocketclient.R;
 import java.util.ArrayList;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UserViewHolder> {
-    private ArrayList<User> usersList;
+    public ArrayList<User> usersList;
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
         public TextView titleTextView;
@@ -41,7 +41,9 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     public void onBindViewHolder(@NonNull UserViewHolder holder, int position) {
         User user = usersList.get(position);
         holder.titleTextView.setText(user.username);
-        holder.subtitleTextView.setText("Online");
+        boolean isOnline = MainActivity.mainActivity.usersMap.containsKey(user.username);
+        holder.subtitleTextView.setText(isOnline ? "Online" : "Offline");
+        holder.subtitleTextView.setTextColor(MainActivity.mainActivity.getResources().getColor(isOnline ? R.color.colorOnlineStatus : R.color.colorOfflineStatus));
     }
 
     @Override

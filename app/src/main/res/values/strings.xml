@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">TCPSocketClient</string>
     <string name="title_activity_chat_list">ChatListActivity</string>
-    <string name="chat_list_menu_logout">Sair</string>
 </resources>
