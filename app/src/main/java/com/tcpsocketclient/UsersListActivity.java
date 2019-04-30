@@ -1,5 +1,6 @@
 package com.tcpsocketclient;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -72,6 +73,19 @@ public class UsersListActivity extends AppCompatActivity {
             }
         };
         ticksThread.start();
+
+
+        Intent intent = getIntent();
+        if (intent != null) {
+            boolean requestUpdatedUsersList = intent.getBooleanExtra("requestUpdatedUsersList", false);
+            intent.removeExtra("requestUpdatedUsersList");
+
+            if (requestUpdatedUsersList) {
+                // Request updated users list to add
+                ProtocolSender protocolSender = new ProtocolSender();
+                protocolSender.execute(String.format("%d", MainActivity.OPCODE_CTS_UPDATEDUSERSLIST));
+            }
+        }
     }
 
     private void onTick() {

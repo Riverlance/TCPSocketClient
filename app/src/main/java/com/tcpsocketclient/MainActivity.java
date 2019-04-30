@@ -103,12 +103,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Open chat list activity
         if (usersListActivity == null) {
-            startActivity(new Intent(context, UsersListActivity.class));
+            Intent intent = new Intent(context, UsersListActivity.class);
+            intent.putExtra("requestUpdatedUsersList", true);
+            startActivity(intent);
         }
-
-        // Request updated users list to add
-        ProtocolSender protocolSender = new ProtocolSender();
-        protocolSender.execute(String.format("%d", OPCODE_CTS_UPDATEDUSERSLIST));
 
         // Message
         Toast.makeText(context, "Sua sessao iniciou.", Toast.LENGTH_SHORT).show();
