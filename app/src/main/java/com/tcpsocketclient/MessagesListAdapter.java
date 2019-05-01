@@ -14,6 +14,7 @@ import java.util.ArrayList;
 
 public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapter.MessageViewHolder> {
     private ArrayList<Message> messagesList;
+    private OnItemClickListener onItemClickListener;
 
     public MessagesListAdapter(ArrayList<Message> messagesList) {
         this.messagesList = messagesList;
@@ -23,7 +24,7 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
     @Override
     public MessageViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(viewType == 1 ? R.layout.content_message_sent_row : R.layout.content_message_received_row, parent, false);
-        MessageViewHolder messageViewHolder = new MessageViewHolder(view);
+        MessageViewHolder messageViewHolder = new MessageViewHolder(view, onItemClickListener);
         return messageViewHolder;
     }
 
@@ -44,6 +45,9 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         return messagesList.size();
     }
 
+    public void setOnClickListener() {
+    }
+
     @Override
     public int getItemViewType(int position) {
         Message message = messagesList.get(position);
@@ -55,10 +59,30 @@ public class MessagesListAdapter extends RecyclerView.Adapter<MessagesListAdapte
         public TextView usernameTextView;
         public TextView valueTextView;
 
-        public MessageViewHolder(@NonNull View itemView) {
+        public MessageViewHolder(@NonNull View itemView, final OnItemClickListener onItemClickListener) {
             super(itemView);
             usernameTextView = itemView.findViewById(R.id.usernameTextView);
             valueTextView = itemView.findViewById(R.id.valueTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onItemClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

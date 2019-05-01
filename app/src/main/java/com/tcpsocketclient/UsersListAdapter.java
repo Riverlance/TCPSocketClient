@@ -13,6 +13,7 @@ import java.util.ArrayList;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UserViewHolder> {
     private ArrayList<User> usersList;
+    private OnItemClickListener onItemClickListener;
 
     public UsersListAdapter(ArrayList<User> usersList) {
         this.usersList = usersList;
@@ -22,7 +23,7 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     @Override
     public UserViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.content_chat_list_row, parent, false);
-        UserViewHolder userViewHolder = new UserViewHolder(view);
+        UserViewHolder userViewHolder = new UserViewHolder(view, onItemClickListener);
         return userViewHolder;
     }
 
@@ -45,10 +46,30 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
         public TextView titleTextView;
         public TextView subtitleTextView;
 
-        public UserViewHolder(@NonNull View itemView) {
+        public UserViewHolder(@NonNull View itemView, final OnItemClickListener onItemClickListener) {
             super(itemView);
             titleTextView = itemView.findViewById(R.id.titleTextView);
             subtitleTextView = itemView.findViewById(R.id.subtitleTextView);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (onItemClickListener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            onItemClickListener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

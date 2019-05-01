@@ -11,6 +11,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.tcpsocketclient.tcpsocketclient.R;
 
@@ -20,7 +21,7 @@ public class UsersListActivity extends AppCompatActivity {
 
     // Needed stuffs
     public RecyclerView recyclerView;
-    public RecyclerView.Adapter usersListAdapter;
+    public UsersListAdapter usersListAdapter;
     private RecyclerView.LayoutManager layoutManager;
     private static Thread ticksThread;
 
@@ -39,14 +40,7 @@ public class UsersListActivity extends AppCompatActivity {
 
         // Needed stuffs
         MainActivity.usersListActivity = this;
-        recyclerView = findViewById(R.id.chatListRecyclerView);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        usersListAdapter = new UsersListAdapter(MainActivity.mainActivity.chatsList);
-
-        // Needed stuffs
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(usersListAdapter);
+        buildRecyclerView();
 
         // Needed stuffs
         // First onTick instantly
@@ -146,5 +140,24 @@ public class UsersListActivity extends AppCompatActivity {
 
         subtitleTextView.setText(isOnline ? "Online" : "Offline");
         subtitleTextView.setTextColor(MainActivity.mainActivity.getResources().getColor(isOnline ? R.color.colorOnlineStatus : R.color.colorOfflineStatus));
+    }
+
+    public void buildRecyclerView() {
+        recyclerView = findViewById(R.id.chatListRecyclerView);
+        recyclerView.setHasFixedSize(true);
+        layoutManager = new LinearLayoutManager(this);
+        usersListAdapter = new UsersListAdapter(MainActivity.mainActivity.chatsList);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(usersListAdapter);
+
+        usersListAdapter.setOnItemClickListener(new UsersListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                //MainActivity.mainActivity.chatsList.get(position);
+                Toast.makeText(UsersListActivity.this, String.format("%d", position), Toast.LENGTH_SHORT).show();
+                //usersListAdapter.notifyDataSetChanged();
+            }
+        });
     }
 }

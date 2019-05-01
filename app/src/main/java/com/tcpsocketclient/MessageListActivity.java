@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
 
 import com.tcpsocketclient.tcpsocketclient.R;
 
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 public class MessageListActivity extends AppCompatActivity {
     // Needed stuffs
     public RecyclerView recyclerView;
-    public RecyclerView.Adapter messagesListAdapter;
+    public MessagesListAdapter messagesListAdapter;
     private RecyclerView.LayoutManager layoutManager;
 
     @Override
@@ -36,23 +37,17 @@ public class MessageListActivity extends AppCompatActivity {
         msg2.value = "Estou bem sim. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.";
         messages.add(msg2);
 
-        messages.add(msg1);
+        /*messages.add(msg1);
         messages.add(msg2);
         messages.add(msg1);
         messages.add(msg2);
         messages.add(msg1);
         messages.add(msg2);
         messages.add(msg1);
-        messages.add(msg2);
+        messages.add(msg2);*/
 
         // Needed stuffs
-        recyclerView = findViewById(R.id.messageListRecyclerView);
-        layoutManager = new LinearLayoutManager(this);
-        messagesListAdapter = new MessagesListAdapter(messages);
-
-        // Needed stuffs
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(messagesListAdapter);
+        buildRecyclerView(messages);
 
         /*
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -73,4 +68,28 @@ public class MessageListActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void buildRecyclerView(ArrayList<Message> messages) {
+        recyclerView = findViewById(R.id.messageListRecyclerView);
+        layoutManager = new LinearLayoutManager(this);
+        messagesListAdapter = new MessagesListAdapter(messages);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(messagesListAdapter);
+
+        // Set messages starting from bottom
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        layoutManager.setStackFromEnd(true);
+        recyclerView.setLayoutManager(layoutManager);
+
+        // Not needed at the moment
+        /*
+        messagesListAdapter.setOnItemClickListener(new MessagesListAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Toast.makeText(MessageListActivity.this, String.format("%d", position), Toast.LENGTH_SHORT).show();
+                // If you change something in the selected data, use: usersListAdapter.notifyDataSetChanged();
+            }
+        });
+        */
+    }
 }

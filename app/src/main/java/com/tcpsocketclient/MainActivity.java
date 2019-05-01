@@ -132,9 +132,6 @@ public class MainActivity extends AppCompatActivity {
             MainActivity.usersListActivity.finish();
         }
 
-        // Load default values (needed?)
-        //MainActivity.mainActivity.loadDefaultValues();
-
         // Message
         Context context = getApplicationContext();
         Toast.makeText(context, "Sua sessao encerrou.", Toast.LENGTH_SHORT).show();
