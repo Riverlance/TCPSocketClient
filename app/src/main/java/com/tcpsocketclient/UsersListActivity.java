@@ -2,6 +2,7 @@ package com.tcpsocketclient;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -39,7 +40,6 @@ public class UsersListActivity extends AppCompatActivity {
         }
 
         // Needed stuffs
-        MainActivity.usersListActivity = this;
         buildRecyclerView();
 
         // Needed stuffs
@@ -82,12 +82,11 @@ public class UsersListActivity extends AppCompatActivity {
         }
     }
 
-    private void onTick() {
-        // Update online status of chats list elements
-        for (int i = 0; i < MainActivity.mainActivity.chatsList.size(); i++) {
-            boolean isOnline = MainActivity.mainActivity.usersMap.containsKey(MainActivity.mainActivity.chatsList.get(i).username);
-            updateRow(i, isOnline);
-        }
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        MainActivity.usersListActivity = this;
     }
 
     @Override
@@ -101,6 +100,24 @@ public class UsersListActivity extends AppCompatActivity {
         }
 
         MainActivity.usersListActivity = null;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) { // Request exit from MessageListActivity
+            if (resultCode == 1) { // Exit from MessageListActivity
+                finish();
+            }
+        }
+    }
+
+    private void onTick() {
+        // Update online status of chats list elements
+        for (int i = 0; i < MainActivity.mainActivity.chatsList.size(); i++) {
+            boolean isOnline = MainActivity.mainActivity.usersMap.containsKey(MainActivity.mainActivity.chatsList.get(i).username);
+            updateRow(i, isOnline);
+        }
     }
 
     @Override
@@ -154,9 +171,26 @@ public class UsersListActivity extends AppCompatActivity {
         usersListAdapter.setOnItemClickListener(new UsersListAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                //MainActivity.mainActivity.chatsList.get(position);
-                Toast.makeText(UsersListActivity.this, String.format("%d", position), Toast.LENGTH_SHORT).show();
-                //usersListAdapter.notifyDataSetChanged();
+                // If you change something in the selected data, use: usersListAdapter.notifyDataSetChanged();
+
+                // Get online user based on saved username
+                User user = MainActivity.mainActivity.getOnlineUser();
+                if (user == null) {
+                    return;
+                }
+
+                Intent intent = new Intent(UsersListActivity.this, MessageListActivity.class);
+                String targetUsername = MainActivity.mainActivity.chatsList.get(position).username;
+
+                /*
+                if (targetUsername.equals(user.username)) {
+                    Snackbar.make(recyclerView, "Você não pode conversar sozinho.", Snackbar.LENGTH_SHORT).show();
+                    return;
+                }
+                */
+
+                intent.putExtra("targetUsername", targetUsername);
+                startActivityForResult(intent, 1); // With exit request code
             }
         });
     }

@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     // Needed stuffs
     public static MainActivity mainActivity;
     public static UsersListActivity usersListActivity;
+    public static MessageListActivity messageListActivity;
     private SharedPreferences sp;
     private SharedPreferences.Editor spe;
     public static Map<String, User> usersMap = new HashMap<>();
@@ -127,9 +128,15 @@ public class MainActivity extends AppCompatActivity {
             usersMap.remove(user.username);
         }
 
-        // Leave usersListActivity
-        if (MainActivity.usersListActivity != null) {
-            MainActivity.usersListActivity.finish();
+        // Leave messageListActivity
+        if (messageListActivity != null) {
+            messageListActivity.finish();
+
+        } else {
+            // Leave usersListActivity
+            if (usersListActivity != null) {
+                usersListActivity.finish();
+            }
         }
 
         // Message
@@ -180,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void removeChatUser(int i, boolean notify) {
-        MainActivity.mainActivity.chatsList.remove(i);
+        chatsList.remove(i);
         if (notify && usersListActivity != null) {
             usersListActivity.usersListAdapter.notifyDataSetChanged();
         }
