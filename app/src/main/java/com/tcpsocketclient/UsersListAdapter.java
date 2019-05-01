@@ -12,18 +12,7 @@ import com.tcpsocketclient.tcpsocketclient.R;
 import java.util.ArrayList;
 
 public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.UserViewHolder> {
-    public ArrayList<User> usersList;
-
-    public static class UserViewHolder extends RecyclerView.ViewHolder {
-        public TextView titleTextView;
-        public TextView subtitleTextView;
-
-        public UserViewHolder(@NonNull View itemView) {
-            super(itemView);
-            titleTextView = itemView.findViewById(R.id.titleTextView);
-            subtitleTextView = itemView.findViewById(R.id.subtitleTextView);
-        }
-    }
+    private ArrayList<User> usersList;
 
     public UsersListAdapter(ArrayList<User> usersList) {
         this.usersList = usersList;
@@ -49,5 +38,17 @@ public class UsersListAdapter extends RecyclerView.Adapter<UsersListAdapter.User
     @Override
     public int getItemCount() {
         return usersList.size();
+    }
+
+
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
+        public TextView titleTextView;
+        public TextView subtitleTextView;
+
+        public UserViewHolder(@NonNull View itemView) {
+            super(itemView);
+            titleTextView = itemView.findViewById(R.id.titleTextView);
+            subtitleTextView = itemView.findViewById(R.id.subtitleTextView);
+        }
     }
 }

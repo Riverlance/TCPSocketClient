@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TCPSocketClient</string>
     <string name="title_activity_chat_list">ChatListActivity</string>
+    <string name="title_activity_message_list">MessageListActivity</string>
 </resources>

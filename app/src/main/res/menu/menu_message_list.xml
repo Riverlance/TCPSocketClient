@@ -5,11 +5,6 @@
     <item
         android:id="@+id/logoutItem"
         android:orderInCategory="1"
-        android:title="Sair"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/globalChatItem"
-        android:orderInCategory="2"
-        android:title="Global Chat"
+        android:title="Voltar"
         app:showAsAction="ifRoom" />
 </menu>
